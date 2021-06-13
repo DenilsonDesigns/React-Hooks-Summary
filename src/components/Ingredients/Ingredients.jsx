@@ -53,9 +53,13 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (ingredientId) => {
-    setIngredients((prevIngredients) =>
-      prevIngredients.filter((ing) => ing.id !== ingredientId)
-    );
+    fetch(`${BASE_URL}/ingredients/${ingredientId}.json`, {
+      method: "DELETE",
+    }).then(() => {
+      setIngredients((prevIngredients) =>
+        prevIngredients.filter((ing) => ing.id !== ingredientId)
+      );
+    });
   };
 
   // using useCallback like this means it survices re-render cycles. /
