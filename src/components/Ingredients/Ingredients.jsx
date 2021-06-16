@@ -67,7 +67,7 @@ const Ingredients = () => {
   // }, []);
   // ***
 
-  const addIngredientHandler = (ingredient) => {
+  const addIngredientHandler = useCallback((ingredient) => {
     // setIsLoading(true);
     dispatchHttpState({ type: "SEND" });
     fetch(`${BASE_URL}/ingredients.json`, {
@@ -92,9 +92,9 @@ const Ingredients = () => {
           ingredient: { id: resData.name, ...ingredient },
         });
       });
-  };
+  }, []);
 
-  const removeIngredientHandler = (ingredientId) => {
+  const removeIngredientHandler = useCallback((ingredientId) => {
     // setIsLoading(true);
     dispatchHttpState({ type: "SEND" });
     fetch(`${BASE_URL}/ingredients/${ingredientId}.json`, {
@@ -113,7 +113,7 @@ const Ingredients = () => {
         // setIsLoading(false);
         dispatchHttpState({ type: "ERROR", errorMsg: err.message });
       });
-  };
+  }, []);
 
   // using useCallback like this means it survives re-render cycles. /
   // meaning that it wont have "changed", and then wont cause /
@@ -124,10 +124,10 @@ const Ingredients = () => {
     dispatchIngredients({ type: "SET", ingredients: filteredIng });
   }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     // setError(null);
     dispatchHttpState({ type: "CLEAR" });
-  };
+  }, []);
 
   return (
     <div className="App">
